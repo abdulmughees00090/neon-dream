@@ -59,39 +59,6 @@
       z-index: 0;
     }
 
-    /* ── Wandering sentence ── */
-    .wandering-sentence {
-      position: fixed;
-      font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
-      font-weight: 400;
-      /* Mobile-first small, scales up */
-      font-size: clamp(0.75rem, 2.5vw, 1.6rem);
-      color: #000;
-      /* Prevent overflow on mobile */
-      max-width: 88vw;
-      white-space: normal;
-      word-break: break-word;
-      text-align: center;
-      line-height: 1.4;
-      letter-spacing: 0.02em;
-      z-index: 10;
-      user-select: none;
-      pointer-events: none;
-      opacity: 0;
-      transition: opacity 2s ease, text-shadow 2s ease;
-      text-shadow: none;
-      transform: translate(-50%, -50%);
-    }
-    .wandering-sentence.alive {
-      opacity: 1;
-    }
-    .wandering-sentence.revealed {
-      text-shadow:
-        0 0 6px rgba(255,255,255,0.95),
-        0 0 18px rgba(255,255,255,0.65),
-        0 0 36px rgba(180,220,255,0.45);
-    }
-
     /* ── Custom cursor dot (hidden on overlays via body rule) ── */
     #cursor-dot {
       position: fixed;
@@ -122,6 +89,7 @@
     }
     @keyframes tutFadeIn  { from { opacity:0 } to { opacity:1 } }
     @keyframes tutFadeOut { from { opacity:1 } to { opacity:0 } }
+    @keyframes fadeIn     { from { opacity:0; transform: translateY(6px) } to { opacity:1; transform: translateY(0) } }
 
     .tut-inner {
       max-width: 480px;
@@ -203,28 +171,36 @@
       box-shadow: 0 0 20px rgba(0,255,238,0.15);
     }
 
-    /* ── Payment entity (dynamic, JS-placed) ── */
+    /* ── Payment entity / phrase button (dynamic, JS-placed) ── */
     #pay-entity-dyn {
       position: fixed;
       font-family: 'Georgia', serif;
-      font-size: clamp(0.6rem, 1.5vw, 0.88rem);
-      font-weight: 700;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: #000;
+      font-size: clamp(0.68rem, 1.55vw, 0.92rem);
+      font-weight: 400;
+      font-style: italic;
+      letter-spacing: 0.06em;
+      text-transform: none;
+      color: rgba(255,255,255,0.28);
       z-index: 12;
       user-select: none;
-      padding: 10px 22px;
-      border: 1px solid #000;
+      padding: 12px 26px;
+      border: 1px solid rgba(255,255,255,0.1);
       border-radius: 40px;
-      transform: translate(-50%, -50%);
-      transition: opacity 4s ease, color 2s ease, border-color 2s ease, box-shadow 2s ease;
+      transform: translate(-50%, -50%) scale(1);
+      /* Fast polished appearance + smooth phrase-change transform */
+      transition: opacity 0.8s ease,
+                  transform 0.75s cubic-bezier(0.34, 1.56, 0.64, 1),
+                  color 0.4s ease,
+                  border-color 0.4s ease,
+                  box-shadow 0.4s ease;
       opacity: 0;
       pointer-events: none;
-      white-space: nowrap;
+      white-space: normal;
+      word-break: break-word;
+      text-align: center;
+      line-height: 1.55;
       cursor: pointer !important;
-      /* never overflow on mobile */
-      max-width: 80vw;
+      max-width: min(72vw, 380px);
     }
 
     /* ── Payment overlay ── */
@@ -398,13 +374,34 @@
       transition: color 2s ease;
     }
 
-    /* ── Mobile adjustments ── */
+    /* ── Mobile (≤480px) ── */
     @media (max-width: 480px) {
-      .tut-inner { padding: 36px 24px 40px; }
-      .pay-modal { padding: 36px 24px 40px; }
-      #footer-links { bottom: 56px; }
-      #mute-btn { bottom: 20px; right: 12px; }
-      #session-glyph { display: none; }
+      .tut-inner          { padding: 36px 24px 40px; }
+      .pay-modal          { padding: 36px 24px 40px; }
+      #footer-links       { bottom: 56px; }
+      #mute-btn           { bottom: 20px; right: 12px; }
+      #session-glyph      { display: none; }
+      #pay-entity-dyn     { max-width: 82vw; font-size: clamp(0.7rem, 3.8vw, 0.88rem); padding: 10px 20px; }
+    }
+
+    /* ── Tablet (481px – 768px) ── */
+    @media (max-width: 768px) and (min-width: 481px) {
+      #pay-entity-dyn     { max-width: 68vw; }
+      .pay-modal          { max-width: 380px; }
+    }
+
+    /* ── Landscape phones (short viewport) ── */
+    @media (max-height: 480px) {
+      #footer-links       { display: none; }
+      #mute-btn           { bottom: 8px; right: 8px; padding: 5px 10px; }
+      #session-glyph      { display: none; }
+    }
+
+    /* ── Large / 4K screens (≥1600px) ── */
+    @media (min-width: 1600px) {
+      #pay-entity-dyn     { font-size: clamp(0.82rem, 0.85vw, 1.05rem); padding: 14px 32px; max-width: min(60vw, 500px); }
+      .tut-inner          { max-width: 540px; }
+      .pay-modal          { max-width: 460px; }
     }
   </style>
 </head>
@@ -767,103 +764,10 @@
   }
 
   /* ═══════════════════════════════════
-     WANDERING SENTENCE SYSTEM
-     — teleports to new random position on each spawn
+     PAYMENT ENTITY SETUP
   ═══════════════════════════════════ */
-  let activeSentence = null;
-  let sentenceHue    = 180;
-
-  // Mobile-safe margins
-  function safeMargin() {
-    return W < 480 ? 55 : 100;
-  }
-
-  function spawnSentence() {
-    const text = randomSentence();
-    sentenceHue = randHue();
-
-    const el = document.createElement('div');
-    el.className = 'wandering-sentence';
-    el.textContent = text;
-    el.style.opacity = '0';
-    document.body.appendChild(el);
-
-    // Wait one frame to get real dimensions after text is set
-    requestAnimationFrame(() => {
-      const elW = Math.min(el.offsetWidth, W * 0.88);
-      const elH = el.offsetHeight;
-      const m   = safeMargin();
-
-      // Random position guaranteed not to clip edges
-      const maxX = W - elW / 2 - m;
-      const minX = elW / 2 + m;
-      const maxY = H - elH / 2 - m;
-      const minY = elH / 2 + m;
-
-      const x = minX + Math.random() * Math.max(0, maxX - minX);
-      const y = minY + Math.random() * Math.max(0, maxY - minY);
-
-      el.style.left = x + 'px';
-      el.style.top  = y + 'px';
-
-      // Tiny nudge delay so opacity transition fires
-      requestAnimationFrame(() => { el.classList.add('alive'); });
-
-      const obj = {
-        el, text,
-        x, y,
-        hue: sentenceHue,
-        phase: 'alive',
-        revealAcc: 0,
-        born: Date.now(),
-      };
-      activeSentence = obj;
-    });
-  }
-
-  function updateSentence() {
-    if (!activeSentence) return;
-    const s = activeSentence;
-    if (s.phase === 'dissolving') return;
-
-    // Reveal check
-    const revealed = isRevealedByPointer(s.el);
-    s.el.classList.toggle('revealed', revealed);
-
-    if (revealed) {
-      s.revealAcc = Math.min(1, s.revealAcc + 0.006);
-    } else {
-      s.revealAcc = Math.max(0, s.revealAcc - 0.002);
-    }
-
-    // Dissolve after 90s or if deeply revealed
-    const age = (Date.now() - s.born) / 1000;
-    if ((age > 90 || s.revealAcc >= 1) && s.phase === 'alive') {
-      s.phase = 'dissolving';
-      dissolveSentence(s);
-    }
-  }
-
-  function dissolveSentence(s) {
-    const r = s.el.getBoundingClientRect();
-    const cx = r.left + r.width  / 2;
-    const cy = r.top  + r.height / 2;
-    spawnDissolution(cx, cy, s.text, s.hue);
-    s.el.style.transition = 'opacity 1.2s ease';
-    s.el.style.opacity = '0';
-    setTimeout(() => {
-      s.el.remove();
-      activeSentence = null;
-      const delay = 2500 + Math.random() * 3500;
-      setTimeout(spawnSentence, delay);
-    }, 1300);
-  }
-
-  setTimeout(spawnSentence, 4000);
-
   /* ═══════════════════════════════════
-     PAYMENT ENTITY
-     — teleports to new random position on text change
+     PAYMENT ENTITY SETUP
   ═══════════════════════════════════ */
   const PAY_TEXTS = [
     "Keep It Alive",
@@ -898,58 +802,142 @@
     x: W * 0.7,
     y: H * 0.35,
     alive: false,
-    textIdx: Math.floor(Math.random() * PAY_TEXTS.length),
   };
 
   function randomPayPosition() {
-    const m = 130;
-    // Also get element width to prevent clipping
-    const elW = payEntityEl.offsetWidth || 180;
-    const elH = payEntityEl.offsetHeight || 44;
-    payState.x = Math.max(elW/2 + m, Math.min(W - elW/2 - m, m + Math.random() * (W - m*2)));
-    payState.y = Math.max(elH/2 + m, Math.min(H - elH/2 - m, m + Math.random() * (H - m*2)));
+    const m   = W < 480 ? 44 : 90;
+    const elW = Math.min(payEntityEl.offsetWidth  || 220, W * 0.72);
+    const elH = payEntityEl.offsetHeight || 50;
+    const safeLeft  = elW / 2 + m;
+    const safeRight = W - elW / 2 - m;
+    const safeTop   = elH / 2 + m + (H < 500 ? 20 : 0);
+    const safeBot   = H - elH / 2 - m;
+    payState.x = safeLeft + Math.random() * Math.max(20, safeRight - safeLeft);
+    payState.y = safeTop  + Math.random() * Math.max(20, safeBot  - safeTop);
     payEntityEl.style.left = payState.x + 'px';
     payEntityEl.style.top  = payState.y + 'px';
   }
 
-  payEntityEl.textContent = PAY_TEXTS[payState.textIdx];
+  /* ═══════════════════════════════════
+     BUTTON PHRASE SYSTEM
+     Phrases from the emotional pools rotate inside
+     the button. Phrase changes trigger a dissolve
+     burst into the surrounding particles.
+  ═══════════════════════════════════ */
+  const BTN_PHRASE_INTERVAL = 11000; // ms between rotations while idle
 
-  function updatePayText() {
-    // Fade out, teleport, fade in
-    payEntityEl.style.opacity = '0';
-    setTimeout(() => {
-      payState.textIdx = (payState.textIdx + 1) % PAY_TEXTS.length;
-      payEntityEl.textContent = PAY_TEXTS[payState.textIdx];
-      randomPayPosition();
-      setTimeout(() => { payEntityEl.style.opacity = '1'; }, 400);
-    }, 800);
+  let btnPhraseTimer  = null;
+  let btnIsHovering   = false;
+  let btnChanging     = false;
+  let btnCurrentHue   = 180;
+
+  function pauseBtnPhraseTimer() {
+    if (btnPhraseTimer) { clearInterval(btnPhraseTimer); btnPhraseTimer = null; }
   }
 
-  // Show payment entity after 25s
+  function startBtnPhraseTimer() {
+    pauseBtnPhraseTimer();
+    btnPhraseTimer = setInterval(() => {
+      if (!btnIsHovering && !btnChanging) changeBtnPhrase();
+    }, BTN_PHRASE_INTERVAL);
+  }
+
+  function changeBtnPhrase() {
+    if (btnChanging || !payState.alive) return;
+    btnChanging = true;
+
+    // Burst particles from the button's current position
+    const r  = payEntityEl.getBoundingClientRect();
+    const cx = r.left + r.width  / 2;
+    const cy = r.top  + r.height / 2;
+    btnCurrentHue = randHue();
+    spawnDissolution(cx, cy, payEntityEl.textContent, btnCurrentHue);
+
+    // Shrink + fade out at old position
+    payEntityEl.style.transition =
+      'opacity 0.45s ease, transform 0.45s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease';
+    payEntityEl.style.opacity   = '0';
+    payEntityEl.style.transform = 'translate(-50%, -50%) scale(0.72)';
+
+    setTimeout(() => {
+      // Update text and teleport to a new random spot (while invisible)
+      payEntityEl.textContent = randomSentence();
+      // Disable transition so the position jump is instant (no sliding)
+      payEntityEl.style.transition = 'none';
+      randomPayPosition();
+
+      // One frame later re-enable transitions and spring-pop in at the new spot
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          payEntityEl.style.transition =
+            'opacity 0.85s ease, transform 1s cubic-bezier(0.34,1.56,0.64,1), color 0.4s ease, border-color 0.3s ease, box-shadow 0.3s ease';
+          payEntityEl.style.opacity   = '1';
+          payEntityEl.style.transform = 'translate(-50%, -50%) scale(1)';
+          setTimeout(() => { btnChanging = false; }, 1050);
+        });
+      });
+    }, 520);
+  }
+
+  // Hover: pause phrase rotation while cursor is over button
+  payEntityEl.addEventListener('mouseenter', () => {
+    btnIsHovering = true;
+    pauseBtnPhraseTimer();
+  });
+  payEntityEl.addEventListener('mouseleave', () => {
+    btnIsHovering = false;
+    if (payState.alive) startBtnPhraseTimer();
+  });
+  payEntityEl.addEventListener('touchstart', () => {
+    btnIsHovering = true;
+    pauseBtnPhraseTimer();
+  }, { passive: true });
+  payEntityEl.addEventListener('touchend', () => {
+    setTimeout(() => {
+      btnIsHovering = false;
+      if (payState.alive) startBtnPhraseTimer();
+    }, 2000);
+  }, { passive: true });
+  payEntityEl.addEventListener('touchcancel', () => {
+    btnIsHovering = false;
+    if (payState.alive) startBtnPhraseTimer();
+  }, { passive: true });
+
+  // Reveal button after 20 s — smooth fast fade-in
   setTimeout(() => {
     payState.alive = true;
-    randomPayPosition();
-    payEntityEl.style.opacity = '1';
+    payEntityEl.textContent = randomSentence();
     payEntityEl.style.pointerEvents = 'auto';
-    setInterval(updatePayText, 14000);
-  }, 25000);
+    requestAnimationFrame(() => {
+      randomPayPosition();
+      requestAnimationFrame(() => {
+        payEntityEl.style.opacity = '1';
+        startBtnPhraseTimer();
+      });
+    });
+  }, 20000);
 
-  // Hover / click intensity
+  /* ═══════════════════════════════════
+     HOVER GLOW ON PAYMENT BUTTON
+  ═══════════════════════════════════ */
   let payHoverIntensity = 0;
   let payEnergyBoost    = 0;
 
   function updatePayEntity() {
-    if (!payState.alive) return;
+    if (!payState.alive || btnChanging) return;
     const isOver = isRevealedByPointer(payEntityEl);
 
     if (isOver) {
       payHoverIntensity = Math.min(1, payHoverIntensity + 0.018);
-      payEntityEl.style.color       = `rgba(255,255,255,${0.6 + payHoverIntensity * 0.4})`;
-      payEntityEl.style.borderColor = `rgba(0,200,255,${0.4 + payHoverIntensity * 0.4})`;
-      payEntityEl.style.boxShadow   = `0 0 ${12 + payHoverIntensity * 40}px rgba(0,200,255,${0.3 + payHoverIntensity*0.5}), 0 0 ${40 + payHoverIntensity*80}px rgba(0,200,255,${0.1 + payHoverIntensity*0.3})`;
+      payEntityEl.style.color       = `rgba(255,255,255,${0.55 + payHoverIntensity * 0.45})`;
+      payEntityEl.style.borderColor = `rgba(0,200,255,${0.35 + payHoverIntensity * 0.5})`;
+      payEntityEl.style.boxShadow   =
+        `0 0 ${12 + payHoverIntensity * 40}px rgba(0,200,255,${0.3  + payHoverIntensity * 0.5}), ` +
+        `0 0 ${40 + payHoverIntensity * 80}px rgba(0,200,255,${0.08 + payHoverIntensity * 0.25})`;
       payEnergyBoost = Math.min(1, payEnergyBoost + 0.022);
     } else {
       payHoverIntensity = Math.max(0, payHoverIntensity - 0.01);
+      // Button remains hidden (black on black) when not hovered — this is the discovery game
       payEntityEl.style.color       = 'rgba(0,0,0,1)';
       payEntityEl.style.borderColor = 'rgba(0,0,0,1)';
       payEntityEl.style.boxShadow   = 'none';
@@ -957,7 +945,7 @@
     }
   }
 
-  // Click on pay entity
+  // Click / tap on button
   function handlePayClick(cx, cy) {
     if (!payState.alive) return;
     const r = payEntityEl.getBoundingClientRect();
@@ -991,8 +979,9 @@
   });
 
   function openPayOverlay() {
-    payModalTitle.textContent = PAY_TEXTS[payState.textIdx];
-    // Pick contextual sub based on session time
+    // Modal title always shows a payment CTA; button shows emotional phrases
+    const titleIdx = Math.floor(Math.random() * PAY_TEXTS.length);
+    payModalTitle.textContent = PAY_TEXTS[titleIdx];
     const subIdx = Math.min(Math.floor(sessionMinutes() / 2), PAY_SUBS.length - 1);
     payModalSub.innerHTML = PAY_SUBS[subIdx].replace('. ', '.<br>');
     payOverlay.classList.add('open');
@@ -1000,17 +989,80 @@
   payClose.addEventListener('click', () => payOverlay.classList.remove('open'));
   payOverlay.addEventListener('click', e => { if (e.target === payOverlay) payOverlay.classList.remove('open'); });
 
+  /* ─────────────────────────────────
+     PAYMENT CONFIGURATION
+     Replace placeholder values with your real credentials.
+
+     Steps (Stripe):
+       1. Sign up at stripe.com
+       2. Developers → API Keys → copy your Publishable Key
+       3. Create a Payment Link at dashboard.stripe.com/payment-links
+       4. Paste keys into PAYMENT_CONFIG below
+       5. Uncomment <script src="https://js.stripe.com/v3/"> at the bottom of this file
+     ───────────────────────────────── */
+  const PAYMENT_CONFIG = {
+    provider: 'stripe', // 'stripe' | 'lemonsqueezy' | 'gumroad' | 'custom'
+
+    // TODO: Replace with your real Stripe Publishable Key (pk_live_... or pk_test_...)
+    stripePublicKey: 'pk_live_REPLACE_WITH_YOUR_STRIPE_PUBLISHABLE_KEY',
+
+    // TODO: Replace with your Stripe Payment Link URL
+    // Create one at: dashboard.stripe.com/payment-links
+    stripePaymentLink: 'https://buy.stripe.com/REPLACE_WITH_YOUR_PAYMENT_LINK',
+
+    // Optional: per-amount Price IDs for dynamic checkout (leave commented unless needed)
+    // stripePriceIds: {
+    //   1: 'price_REPLACE_FOR_1_DOLLAR',
+    //   3: 'price_REPLACE_FOR_3_DOLLARS',
+    //   5: 'price_REPLACE_FOR_5_DOLLARS',
+    // },
+  };
+
   payConfirm.addEventListener('click', () => {
-    if (typeof Paddle !== 'undefined') {
-      Paddle.Checkout.open({
-        items: [{ priceId: 'YOUR_PADDLE_PRICE_ID', quantity: 1 }],
-        settings: { displayMode: 'overlay', theme: 'dark', locale: 'en' },
-        customData: { amount: selectedAmount },
-      });
-    } else {
-      window.open('https://buy.paddle.com/product/YOUR_PADDLE_PRODUCT_ID', '_blank');
+    const { provider, stripePaymentLink, stripePublicKey } = PAYMENT_CONFIG;
+
+    if (provider === 'stripe') {
+      const linkConfigured = stripePaymentLink &&
+        !stripePaymentLink.includes('REPLACE_WITH');
+
+      if (linkConfigured) {
+        // Stripe Payment Link — simplest integration
+        const url = new URL(stripePaymentLink);
+        url.searchParams.set('client_reference_id', 'neondream');
+        window.open(url.toString(), '_blank');
+        payOverlay.classList.remove('open');
+
+      } else if (typeof Stripe !== 'undefined' &&
+                 !stripePublicKey.includes('REPLACE_WITH')) {
+        // Full Stripe.js checkout via Price IDs
+        const stripe   = Stripe(stripePublicKey);
+        const priceId  = (PAYMENT_CONFIG.stripePriceIds || {})[selectedAmount];
+        if (priceId) {
+          stripe.redirectToCheckout({
+            lineItems: [{ price: priceId, quantity: 1 }],
+            mode:       'payment',
+            successUrl: window.location.origin + '/?payment=success',
+            cancelUrl:  window.location.href,
+          }).catch(console.error);
+        }
+        payOverlay.classList.remove('open');
+
+      } else {
+        // Payment not yet configured — show friendly message inside the modal
+        if (!document.getElementById('pay-not-ready-note')) {
+          const note = document.createElement('p');
+          note.id = 'pay-not-ready-note';
+          note.textContent = 'Payment is being set up — check back soon.';
+          note.style.cssText =
+            'margin-top:18px; font-size:0.78rem; letter-spacing:0.08em; ' +
+            'color:rgba(180,220,255,0.75); text-align:center; ' +
+            'animation: fadeIn 0.4s ease;';
+          payConfirm.insertAdjacentElement('afterend', note);
+          setTimeout(() => { if (note.parentNode) note.remove(); }, 4000);
+        }
+        // Keep the overlay open so the user sees the message
+      }
     }
-    payOverlay.classList.remove('open');
   });
 
   /* ═══════════════════════════════════
@@ -1116,7 +1168,6 @@
     const energy = payEnergyBoost + Math.min(pointerSpeed / 80, 0.5);
     for (const orb of orbs) { orb.update(energy); orb.draw(energy); }
 
-    updateSentence();
     updatePayEntity();
     updateCursorColor();
     reactAudio();
@@ -1129,13 +1180,12 @@
 })();
 </script>
 
-<script src="https://cdn.paddle.com/paddle/v2/paddle.js"></script>
-<script>
-  if (typeof Paddle !== 'undefined') {
-    // Paddle.Environment.set('sandbox'); // uncomment for sandbox testing
-    Paddle.Initialize({ token: 'YOUR_PADDLE_CLIENT_SIDE_TOKEN' });
-  }
-</script>
+<!-- ═══ STRIPE PAYMENT INTEGRATION ═══
+     Uncomment the line below once you have configured PAYMENT_CONFIG
+     inside the main <script> block with your real Stripe credentials.
+     Docs: https://stripe.com/docs/js/including
+<script src="https://js.stripe.com/v3/"></script>
+-->
 
 </body>
 </html>
