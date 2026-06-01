@@ -20,15 +20,16 @@
   <meta name="twitter:description" content="When your mind won't stop. When the night is too quiet. Move slowly — the dream reacts."/>
   <meta name="theme-color" content="#000000"/>
   <link rel="canonical" href="https://silverfoxdynamics.com/"/>
+  
   <!-- PWA Meta Tags -->
-<link rel="manifest" href="/manifest.json">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Neon Dream">
-<link rel="apple-touch-icon" href="/assets/icons/icon-192x192.png">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="msapplication-TileImage" content="/assets/icons/icon-144x144.png">
-<meta name="msapplication-TileColor" content="#000000">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Neon Dream">
+  <link rel="apple-touch-icon" href="/assets/icons/icon-192x192.png">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="msapplication-TileImage" content="/assets/icons/icon-144x144.png">
+  <meta name="msapplication-TileColor" content="#000000">
 
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -196,7 +197,6 @@
       border: 1px solid rgba(255,255,255,0.1);
       border-radius: 40px;
       transform: translate(-50%, -50%) scale(1);
-      /* Fast polished appearance + smooth phrase-change transform */
       transition: opacity 0.8s ease,
                   transform 0.75s cubic-bezier(0.34, 1.56, 0.64, 1),
                   color 0.4s ease,
@@ -412,6 +412,183 @@
       .tut-inner          { max-width: 540px; }
       .pay-modal          { max-width: 460px; }
     }
+
+    /*-- PWA Install Button Styles --*/
+    .pwa-install-btn {
+      position: fixed;
+      bottom: 90px;
+      left: 20px;
+      z-index: 1000;
+      background: rgba(10, 10, 15, 0.85);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(0, 255, 238, 0.3);
+      border-radius: 40px;
+      padding: 10px 18px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      font-family: 'Georgia', serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      color: rgba(255, 255, 255, 0.7);
+      transition: all 0.3s ease;
+      box-shadow: 0 0 15px rgba(0, 255, 238, 0.1);
+    }
+    
+    .pwa-install-btn:hover {
+      background: rgba(0, 255, 238, 0.15);
+      border-color: rgba(0, 255, 238, 0.8);
+      color: #fff;
+      box-shadow: 0 0 25px rgba(0, 255, 238, 0.3);
+      transform: translateY(-2px);
+    }
+    
+    .pwa-plus-icon {
+      font-size: 1.3rem;
+      font-weight: 300;
+      line-height: 1;
+      color: #0ff;
+      transition: transform 0.2s ease;
+    }
+    
+    .pwa-install-btn:hover .pwa-plus-icon {
+      transform: rotate(90deg);
+    }
+    
+    .pwa-text {
+      font-size: 0.7rem;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+    }
+    
+    @media (max-width: 380px) {
+      .pwa-text { display: none; }
+      .pwa-install-btn { padding: 10px 14px; }
+    }
+    
+    @keyframes slideInLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+    
+    .pwa-install-btn.show {
+      animation: slideInLeft 0.5s ease forwards;
+    }
+    
+    /* Manual install modal styles */
+    .pwa-manual-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.95);
+      backdrop-filter: blur(15px);
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: fadeInManual 0.3s ease;
+    }
+    
+    @keyframes fadeInManual {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
+    .pwa-manual-card {
+      background: rgba(10, 10, 15, 0.98);
+      border: 1px solid rgba(0, 255, 238, 0.3);
+      border-radius: 24px;
+      max-width: 340px;
+      width: 85%;
+      padding: 32px 24px;
+      text-align: center;
+      position: relative;
+      box-shadow: 0 0 50px rgba(0, 255, 238, 0.15);
+    }
+    
+    .pwa-manual-close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: none;
+      border: none;
+      color: rgba(255,255,255,0.4);
+      font-size: 1.2rem;
+      cursor: pointer;
+      padding: 4px 8px;
+    }
+    
+    .pwa-manual-icon {
+      font-size: 3rem;
+      margin-bottom: 16px;
+    }
+    
+    .pwa-manual-card h3 {
+      font-family: 'Georgia', serif;
+      font-size: 1.3rem;
+      color: rgba(255,255,255,0.85);
+      margin-bottom: 20px;
+      font-weight: 400;
+    }
+    
+    .pwa-manual-steps {
+      text-align: left;
+      margin: 24px 0;
+    }
+    
+    .step {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+      font-family: Arial, sans-serif;
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.7);
+    }
+    
+    .step-num {
+      background: rgba(0, 255, 238, 0.2);
+      border: 1px solid rgba(0, 255, 238, 0.4);
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: bold;
+      color: #0ff;
+    }
+    
+    .step-icon {
+      font-size: 1.1rem;
+      display: inline-block;
+      margin: 0 4px;
+    }
+    
+    .pwa-manual-gotit {
+      background: transparent;
+      border: 1px solid rgba(0, 255, 238, 0.5);
+      color: rgba(255,255,255,0.85);
+      padding: 12px 32px;
+      border-radius: 40px;
+      font-family: 'Georgia', serif;
+      font-size: 0.85rem;
+      cursor: pointer;
+      margin-top: 16px;
+      transition: all 0.3s;
+    }
+    
+    .pwa-manual-gotit:hover {
+      background: rgba(0, 255, 238, 0.15);
+      border-color: #0ff;
+    }
   </style>
 </head>
 <body>
@@ -452,18 +629,14 @@
   </div>
 </div>
 
+<!-- Main Application Script -->
 <script>
 (function () {
   'use strict';
 
-  /* ═══════════════════════════════════
-     TUTORIAL
-  ═══════════════════════════════════ */
   const STORAGE_KEY = 'neonDream_v4';
   const tutEl  = document.getElementById('tutorial');
   const tutBtn = document.getElementById('tut-enter');
-
-  // Hide custom cursor dot when over overlays
   const cursorDot = document.getElementById('cursor-dot');
 
   function hideTutorial() {
@@ -474,9 +647,6 @@
   tutBtn.addEventListener('click', hideTutorial);
   try { if (localStorage.getItem(STORAGE_KEY)) { setTimeout(hideTutorial, 400); } } catch(_){}
 
-  /* ═══════════════════════════════════
-     CANVAS
-  ═══════════════════════════════════ */
   const canvas = document.getElementById('c');
   const ctx    = canvas.getContext('2d');
   let W, H;
@@ -487,9 +657,6 @@
   resize();
   window.addEventListener('resize', () => { resize(); });
 
-  /* ═══════════════════════════════════
-     POINTER TRACKING
-  ═══════════════════════════════════ */
   let mx = W / 2, my = H / 2;
   let pmx = mx, pmy = my;
   let pointerSpeed = 0;
@@ -506,7 +673,6 @@
   window.addEventListener('mousemove', e => {
     isTouch = false;
     onPointerMove(e.clientX, e.clientY);
-    // Hide dot when over an overlay
     const overOverlay = tutEl.style.display !== 'none' && tutEl.offsetParent !== null
       || document.getElementById('pay-overlay').classList.contains('open');
     cursorDot.style.opacity = overOverlay ? '0' : '1';
@@ -525,19 +691,12 @@
     onPointerMove(t.clientX, t.clientY);
   }, { passive: true });
 
-  /* On touch devices, hide the fake cursor dot */
   if ('ontouchstart' in window) cursorDot.style.display = 'none';
 
-  /* ═══════════════════════════════════
-     SESSION DURATION
-  ═══════════════════════════════════ */
   const sessionStart = Date.now();
   function sessionMinutes() { return (Date.now() - sessionStart) / 60000; }
   function sessionIntensity() { return Math.min(1, sessionMinutes() / 10); }
 
-  /* ═══════════════════════════════════
-     ORB SYSTEM
-  ═══════════════════════════════════ */
   const TRAIL_LEN    = 52;
   const N_ORBS       = 8;
   const SPAWN_SPREAD = 200;
@@ -612,9 +771,6 @@
 
   const orbs = Array.from({ length: N_ORBS }, () => new Orb());
 
-  /* ═══════════════════════════════════
-     SPARKLES
-  ═══════════════════════════════════ */
   const sparkles = Array.from({ length: 60 }, () => ({
     x:     Math.random() * 1920,
     y:     Math.random() * 1080,
@@ -640,9 +796,6 @@
     }
   }
 
-  /* ═══════════════════════════════════
-     DISSOLUTION PARTICLES
-  ═══════════════════════════════════ */
   const dissParticles = [];
 
   function spawnDissolution(x, y, text, hue) {
@@ -683,9 +836,6 @@
     }
   }
 
-  /* ═══════════════════════════════════
-     REVEAL HIT-TEST
-  ═══════════════════════════════════ */
   function isRevealedByPointer(el) {
     if (!el) return false;
     const r = el.getBoundingClientRect();
@@ -694,11 +844,6 @@
            my >= r.top  - pad && my <= r.bottom + pad;
   }
 
-  /* ═══════════════════════════════════
-     SENTENCE POOLS — emotionally grouped
-  ═══════════════════════════════════ */
-
-  // Phase 1: Boredom / arrival (0–2 min)
   const SENTENCES_BOREDOM = [
     "You opened this because something was missing.",
     "This is what boredom looks like when it breathes.",
@@ -712,7 +857,6 @@
     "Boredom is just the mind asking for more.",
   ];
 
-  // Phase 2: Recognition / thought spiral (2–5 min)
   const SENTENCES_THOUGHT = [
     "You are thinking about something you haven't said.",
     "Some thoughts only exist when nobody's watching.",
@@ -728,7 +872,6 @@
     "You came for nothing and found something quieter.",
   ];
 
-  // Phase 3: Deep presence / emotional (5–8 min)
   const SENTENCES_PRESENCE = [
     "You have been here long enough to know this matters.",
     "The lights remember every cursor that passed through.",
@@ -742,7 +885,6 @@
     "Staying is a form of care most people forget.",
   ];
 
-  // Phase 4: Late / accountability (8+ min)
   const SENTENCES_LATE = [
     "You have been here long enough to owe this something.",
     "Most people left before understanding. You didn't.",
@@ -772,28 +914,13 @@
     return t;
   }
 
-  /* ═══════════════════════════════════
-     PAYMENT ENTITY SETUP
-  ═══════════════════════════════════ */
-  /* ═══════════════════════════════════
-     PAYMENT ENTITY SETUP
-  ═══════════════════════════════════ */
   const PAY_TEXTS = [
-    "Keep It Alive",
-    "Leave A Trace",
-    "Feed The Lights",
-    "Continue The Signal",
-    "Stay A Little Longer",
-    "Keep The Dream Breathing",
-    "The Lights Remember",
-    "Keep This Existing",
-    "Someone Already Did",
-    "Leave Something Behind",
-    "You Could Still Do More",
-    "Add Another Thought",
+    "Keep It Alive", "Leave A Trace", "Feed The Lights", "Continue The Signal",
+    "Stay A Little Longer", "Keep The Dream Breathing", "The Lights Remember",
+    "Keep This Existing", "Someone Already Did", "Leave Something Behind",
+    "You Could Still Do More", "Add Another Thought",
   ];
 
-  // Contextual subtitles for the payment modal
   const PAY_SUBS = [
     "You've been here long enough to know it's real.",
     "Something kept you here. Leave a trace of light.",
@@ -807,11 +934,7 @@
   payEntityEl.id = 'pay-entity-dyn';
   document.body.appendChild(payEntityEl);
 
-  const payState = {
-    x: W * 0.7,
-    y: H * 0.35,
-    alive: false,
-  };
+  const payState = { x: W * 0.7, y: H * 0.35, alive: false };
 
   function randomPayPosition() {
     const m   = W < 480 ? 44 : 90;
@@ -827,18 +950,8 @@
     payEntityEl.style.top  = payState.y + 'px';
   }
 
-  /* ═══════════════════════════════════
-     BUTTON PHRASE SYSTEM
-     Phrases from the emotional pools rotate inside
-     the button. Phrase changes trigger a dissolve
-     burst into the surrounding particles.
-  ═══════════════════════════════════ */
-  const BTN_PHRASE_INTERVAL = 11000; // ms between rotations while idle
-
-  let btnPhraseTimer  = null;
-  let btnIsHovering   = false;
-  let btnChanging     = false;
-  let btnCurrentHue   = 180;
+  const BTN_PHRASE_INTERVAL = 11000;
+  let btnPhraseTimer = null, btnIsHovering = false, btnChanging = false, btnCurrentHue = 180;
 
   function pauseBtnPhraseTimer() {
     if (btnPhraseTimer) { clearInterval(btnPhraseTimer); btnPhraseTimer = null; }
@@ -854,32 +967,21 @@
   function changeBtnPhrase() {
     if (btnChanging || !payState.alive) return;
     btnChanging = true;
-
-    // Burst particles from the button's current position
     const r  = payEntityEl.getBoundingClientRect();
     const cx = r.left + r.width  / 2;
     const cy = r.top  + r.height / 2;
     btnCurrentHue = randHue();
     spawnDissolution(cx, cy, payEntityEl.textContent, btnCurrentHue);
-
-    // Shrink + fade out at old position
-    payEntityEl.style.transition =
-      'opacity 0.45s ease, transform 0.45s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease';
+    payEntityEl.style.transition = 'opacity 0.45s ease, transform 0.45s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease';
     payEntityEl.style.opacity   = '0';
     payEntityEl.style.transform = 'translate(-50%, -50%) scale(0.72)';
-
     setTimeout(() => {
-      // Update text and teleport to a new random spot (while invisible)
       payEntityEl.textContent = randomSentence();
-      // Disable transition so the position jump is instant (no sliding)
       payEntityEl.style.transition = 'none';
       randomPayPosition();
-
-      // One frame later re-enable transitions and spring-pop in at the new spot
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {
-          payEntityEl.style.transition =
-            'opacity 0.85s ease, transform 1s cubic-bezier(0.34,1.56,0.64,1), color 0.4s ease, border-color 0.3s ease, box-shadow 0.3s ease';
+          payEntityEl.style.transition = 'opacity 0.85s ease, transform 1s cubic-bezier(0.34,1.56,0.64,1), color 0.4s ease, border-color 0.3s ease, box-shadow 0.3s ease';
           payEntityEl.style.opacity   = '1';
           payEntityEl.style.transform = 'translate(-50%, -50%) scale(1)';
           setTimeout(() => { btnChanging = false; }, 1050);
@@ -888,31 +990,12 @@
     }, 520);
   }
 
-  // Hover: pause phrase rotation while cursor is over button
-  payEntityEl.addEventListener('mouseenter', () => {
-    btnIsHovering = true;
-    pauseBtnPhraseTimer();
-  });
-  payEntityEl.addEventListener('mouseleave', () => {
-    btnIsHovering = false;
-    if (payState.alive) startBtnPhraseTimer();
-  });
-  payEntityEl.addEventListener('touchstart', () => {
-    btnIsHovering = true;
-    pauseBtnPhraseTimer();
-  }, { passive: true });
-  payEntityEl.addEventListener('touchend', () => {
-    setTimeout(() => {
-      btnIsHovering = false;
-      if (payState.alive) startBtnPhraseTimer();
-    }, 2000);
-  }, { passive: true });
-  payEntityEl.addEventListener('touchcancel', () => {
-    btnIsHovering = false;
-    if (payState.alive) startBtnPhraseTimer();
-  }, { passive: true });
+  payEntityEl.addEventListener('mouseenter', () => { btnIsHovering = true; pauseBtnPhraseTimer(); });
+  payEntityEl.addEventListener('mouseleave', () => { btnIsHovering = false; if (payState.alive) startBtnPhraseTimer(); });
+  payEntityEl.addEventListener('touchstart', () => { btnIsHovering = true; pauseBtnPhraseTimer(); }, { passive: true });
+  payEntityEl.addEventListener('touchend', () => { setTimeout(() => { btnIsHovering = false; if (payState.alive) startBtnPhraseTimer(); }, 2000); }, { passive: true });
+  payEntityEl.addEventListener('touchcancel', () => { btnIsHovering = false; if (payState.alive) startBtnPhraseTimer(); }, { passive: true });
 
-  // Reveal button after 20 s — smooth fast fade-in
   setTimeout(() => {
     payState.alive = true;
     payEntityEl.textContent = randomSentence();
@@ -926,27 +1009,19 @@
     });
   }, 20000);
 
-  /* ═══════════════════════════════════
-     HOVER GLOW ON PAYMENT BUTTON
-  ═══════════════════════════════════ */
-  let payHoverIntensity = 0;
-  let payEnergyBoost    = 0;
+  let payHoverIntensity = 0, payEnergyBoost = 0;
 
   function updatePayEntity() {
     if (!payState.alive || btnChanging) return;
     const isOver = isRevealedByPointer(payEntityEl);
-
     if (isOver) {
       payHoverIntensity = Math.min(1, payHoverIntensity + 0.018);
       payEntityEl.style.color       = `rgba(255,255,255,${0.55 + payHoverIntensity * 0.45})`;
       payEntityEl.style.borderColor = `rgba(0,200,255,${0.35 + payHoverIntensity * 0.5})`;
-      payEntityEl.style.boxShadow   =
-        `0 0 ${12 + payHoverIntensity * 40}px rgba(0,200,255,${0.3  + payHoverIntensity * 0.5}), ` +
-        `0 0 ${40 + payHoverIntensity * 80}px rgba(0,200,255,${0.08 + payHoverIntensity * 0.25})`;
+      payEntityEl.style.boxShadow   = `0 0 ${12 + payHoverIntensity * 40}px rgba(0,200,255,${0.3  + payHoverIntensity * 0.5}), 0 0 ${40 + payHoverIntensity * 80}px rgba(0,200,255,${0.08 + payHoverIntensity * 0.25})`;
       payEnergyBoost = Math.min(1, payEnergyBoost + 0.022);
     } else {
       payHoverIntensity = Math.max(0, payHoverIntensity - 0.01);
-      // Button remains hidden (black on black) when not hovered — this is the discovery game
       payEntityEl.style.color       = 'rgba(0,0,0,1)';
       payEntityEl.style.borderColor = 'rgba(0,0,0,1)';
       payEntityEl.style.boxShadow   = 'none';
@@ -954,7 +1029,6 @@
     }
   }
 
-  // Click / tap on button
   function handlePayClick(cx, cy) {
     if (!payState.alive) return;
     const r = payEntityEl.getBoundingClientRect();
@@ -963,14 +1037,8 @@
     }
   }
   window.addEventListener('click',    e => handlePayClick(e.clientX, e.clientY));
-  window.addEventListener('touchend', e => {
-    const t = e.changedTouches[0];
-    handlePayClick(t.clientX, t.clientY);
-  });
+  window.addEventListener('touchend', e => { const t = e.changedTouches[0]; handlePayClick(t.clientX, t.clientY); });
 
-  /* ═══════════════════════════════════
-     PAYMENT OVERLAY
-  ═══════════════════════════════════ */
   const payOverlay    = document.getElementById('pay-overlay');
   const payConfirm    = document.getElementById('pay-confirm');
   const payClose      = document.getElementById('pay-close');
@@ -988,7 +1056,6 @@
   });
 
   function openPayOverlay() {
-    // Modal title always shows a payment CTA; button shows emotional phrases
     const titleIdx = Math.floor(Math.random() * PAY_TEXTS.length);
     payModalTitle.textContent = PAY_TEXTS[titleIdx];
     const subIdx = Math.min(Math.floor(sessionMinutes() / 2), PAY_SUBS.length - 1);
@@ -998,85 +1065,46 @@
   payClose.addEventListener('click', () => payOverlay.classList.remove('open'));
   payOverlay.addEventListener('click', e => { if (e.target === payOverlay) payOverlay.classList.remove('open'); });
 
-  /* ─────────────────────────────────
-     PAYMENT CONFIGURATION
-     Replace placeholder values with your real credentials.
-
-     Steps (Stripe):
-       1. Sign up at stripe.com
-       2. Developers → API Keys → copy your Publishable Key
-       3. Create a Payment Link at dashboard.stripe.com/payment-links
-       4. Paste keys into PAYMENT_CONFIG below
-       5. Uncomment <script src="https://js.stripe.com/v3/"> at the bottom of this file
-     ───────────────────────────────── */
   const PAYMENT_CONFIG = {
-    provider: 'stripe', // 'stripe' | 'lemonsqueezy' | 'gumroad' | 'custom'
-
-    // TODO: Replace with your real Stripe Publishable Key (pk_live_... or pk_test_...)
+    provider: 'stripe',
     stripePublicKey: 'pk_live_REPLACE_WITH_YOUR_STRIPE_PUBLISHABLE_KEY',
-
-    // TODO: Replace with your Stripe Payment Link URL
-    // Create one at: dashboard.stripe.com/payment-links
     stripePaymentLink: 'https://buy.stripe.com/REPLACE_WITH_YOUR_PAYMENT_LINK',
-
-    // Optional: per-amount Price IDs for dynamic checkout (leave commented unless needed)
-    // stripePriceIds: {
-    //   1: 'price_REPLACE_FOR_1_DOLLAR',
-    //   3: 'price_REPLACE_FOR_3_DOLLARS',
-    //   5: 'price_REPLACE_FOR_5_DOLLARS',
-    // },
   };
 
   payConfirm.addEventListener('click', () => {
     const { provider, stripePaymentLink, stripePublicKey } = PAYMENT_CONFIG;
-
     if (provider === 'stripe') {
-      const linkConfigured = stripePaymentLink &&
-        !stripePaymentLink.includes('REPLACE_WITH');
-
+      const linkConfigured = stripePaymentLink && !stripePaymentLink.includes('REPLACE_WITH');
       if (linkConfigured) {
-        // Stripe Payment Link — simplest integration
         const url = new URL(stripePaymentLink);
         url.searchParams.set('client_reference_id', 'neondream');
         window.open(url.toString(), '_blank');
         payOverlay.classList.remove('open');
-
-      } else if (typeof Stripe !== 'undefined' &&
-                 !stripePublicKey.includes('REPLACE_WITH')) {
-        // Full Stripe.js checkout via Price IDs
+      } else if (typeof Stripe !== 'undefined' && !stripePublicKey.includes('REPLACE_WITH')) {
         const stripe   = Stripe(stripePublicKey);
         const priceId  = (PAYMENT_CONFIG.stripePriceIds || {})[selectedAmount];
         if (priceId) {
           stripe.redirectToCheckout({
             lineItems: [{ price: priceId, quantity: 1 }],
-            mode:       'payment',
+            mode: 'payment',
             successUrl: window.location.origin + '/?payment=success',
-            cancelUrl:  window.location.href,
+            cancelUrl: window.location.href,
           }).catch(console.error);
         }
         payOverlay.classList.remove('open');
-
       } else {
-        // Payment not yet configured — show friendly message inside the modal
         if (!document.getElementById('pay-not-ready-note')) {
           const note = document.createElement('p');
           note.id = 'pay-not-ready-note';
           note.textContent = 'Payment is being set up — check back soon.';
-          note.style.cssText =
-            'margin-top:18px; font-size:0.78rem; letter-spacing:0.08em; ' +
-            'color:rgba(180,220,255,0.75); text-align:center; ' +
-            'animation: fadeIn 0.4s ease;';
+          note.style.cssText = 'margin-top:18px; font-size:0.78rem; letter-spacing:0.08em; color:rgba(180,220,255,0.75); text-align:center; animation: fadeIn 0.4s ease;';
           payConfirm.insertAdjacentElement('afterend', note);
           setTimeout(() => { if (note.parentNode) note.remove(); }, 4000);
         }
-        // Keep the overlay open so the user sees the message
       }
     }
   });
 
-  /* ═══════════════════════════════════
-     AUDIO SYSTEM
-  ═══════════════════════════════════ */
   let audioCtx = null, masterGain = null;
   let muted = false, audioStarted = false;
 
@@ -1095,41 +1123,39 @@
       masterGain.gain.value = 0;
       masterGain.connect(audioCtx.destination);
       masterGain.gain.setTargetAtTime(0.12, audioCtx.currentTime, 2.5);
+      function createDrone(freq, gain) {
+        if (!audioCtx) return;
+        const osc = audioCtx.createOscillator();
+        const g   = audioCtx.createGain();
+        const filt = audioCtx.createBiquadFilter();
+        osc.type = 'sine'; osc.frequency.value = freq;
+        const lfo = audioCtx.createOscillator();
+        const lfog = audioCtx.createGain();
+        lfo.frequency.value = 0.05 + Math.random() * 0.04;
+        lfog.gain.value = freq * 0.004;
+        lfo.connect(lfog); lfog.connect(osc.frequency); lfo.start();
+        filt.type = 'lowpass'; filt.frequency.value = 800;
+        g.gain.value = gain;
+        osc.connect(filt); filt.connect(g); g.connect(masterGain); osc.start();
+      }
+      function createShimmer() {
+        if (!audioCtx) return;
+        function tick() {
+          if (!audioCtx || muted) { setTimeout(tick, 2000); return; }
+          const osc = audioCtx.createOscillator();
+          const g   = audioCtx.createGain();
+          osc.type = 'sine'; osc.frequency.value = 880 + Math.random() * 1200;
+          g.gain.setValueAtTime(0, audioCtx.currentTime);
+          g.gain.linearRampToValueAtTime(0.018, audioCtx.currentTime + 0.4);
+          g.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 2.5);
+          osc.connect(g); g.connect(masterGain); osc.start(); osc.stop(audioCtx.currentTime + 2.6);
+          setTimeout(tick, 1800 + Math.random() * 3000);
+        }
+        setTimeout(tick, 2000);
+      }
       createDrone(55, 0.4); createDrone(110, 0.25); createDrone(165, 0.12);
       createShimmer();
     } catch(e) {}
-  }
-
-  function createDrone(freq, gain) {
-    if (!audioCtx) return;
-    const osc = audioCtx.createOscillator();
-    const g   = audioCtx.createGain();
-    const filt = audioCtx.createBiquadFilter();
-    osc.type = 'sine'; osc.frequency.value = freq;
-    const lfo = audioCtx.createOscillator();
-    const lfog = audioCtx.createGain();
-    lfo.frequency.value = 0.05 + Math.random() * 0.04;
-    lfog.gain.value = freq * 0.004;
-    lfo.connect(lfog); lfog.connect(osc.frequency); lfo.start();
-    filt.type = 'lowpass'; filt.frequency.value = 800;
-    g.gain.value = gain;
-    osc.connect(filt); filt.connect(g); g.connect(masterGain); osc.start();
-  }
-
-  function createShimmer() {
-    if (!audioCtx) return;
-    function tick() {
-      if (!audioCtx || muted) { setTimeout(tick, 2000); return; }
-      const osc = audioCtx.createOscillator();
-      const g   = audioCtx.createGain();
-      osc.type = 'sine'; osc.frequency.value = 880 + Math.random() * 1200;
-      g.gain.setValueAtTime(0, audioCtx.currentTime);
-      g.gain.linearRampToValueAtTime(0.018, audioCtx.currentTime + 0.4);
-      g.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 2.5);
-      osc.connect(g); g.connect(masterGain); osc.start(); osc.stop(audioCtx.currentTime + 2.6);
-      setTimeout(tick, 1800 + Math.random() * 3000);
-    }
-    setTimeout(tick, 2000);
   }
 
   function reactAudio() {
@@ -1141,9 +1167,6 @@
   window.addEventListener('click',      () => { if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume(); });
   window.addEventListener('touchstart', () => { if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume(); }, { passive: true });
 
-  /* ═══════════════════════════════════
-     CURSOR COLOR
-  ═══════════════════════════════════ */
   function updateCursorColor() {
     let bestHue = 180, bestDist = Infinity;
     for (const orb of orbs) {
@@ -1154,48 +1177,36 @@
     cursorDot.style.boxShadow  = `0 0 10px 3px hsl(${bestHue},100%,60%)`;
   }
 
-  /* ═══════════════════════════════════
-     SESSION GLYPH
-  ═══════════════════════════════════ */
   const sessionGlyph = document.getElementById('session-glyph');
   setInterval(() => {
     const a = 0.04 + sessionIntensity() * 0.18;
     sessionGlyph.style.color = `rgba(255,255,255,${a})`;
   }, 3000);
 
-  /* ═══════════════════════════════════
-     MAIN LOOP
-  ═══════════════════════════════════ */
   function loop() {
     const fade = 0.15 + Math.min(pointerSpeed / 200, 0.06);
     ctx.fillStyle = `rgba(0,0,0,${fade})`;
     ctx.fillRect(0, 0, W, H);
-
     drawSparkles();
     updateDrawDiss();
-
     const energy = payEnergyBoost + Math.min(pointerSpeed / 80, 0.5);
     for (const orb of orbs) { orb.update(energy); orb.draw(energy); }
-
     updatePayEntity();
     updateCursorColor();
     reactAudio();
-
     requestAnimationFrame(loop);
   }
 
   loop();
-
 })();
 </script>
 
 <!-- ═══ STRIPE PAYMENT INTEGRATION ═══
      Uncomment the line below once you have configured PAYMENT_CONFIG
-     inside the main <script> block with your real Stripe credentials.
-     Docs: https://stripe.com/docs/js/including
 <script src="https://js.stripe.com/v3/"></script>
 -->
-<!-- Register Service Worker -->
+
+<!-- Service Worker Registration -->
 <script>
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
@@ -1205,5 +1216,124 @@ if ('serviceWorker' in navigator) {
   });
 }
 </script>
+
+<!-- PWA Install Button HTML -->
+<div id="pwa-install-container" style="display: none;">
+  <button id="pwa-install-btn" class="pwa-install-btn">
+    <span class="pwa-plus-icon">+</span>
+    <span class="pwa-text">Install App</span>
+  </button>
+</div>
+
+<!-- PWA Install JavaScript -->
+<script>
+(function() {
+  'use strict';
+  
+  let deferredPrompt = null;
+  const installContainer = document.getElementById('pwa-install-container');
+  const installBtn = document.getElementById('pwa-install-btn');
+  let isInstalled = false;
+  let installPromptShown = false;
+  
+  function isPWAInstalled() {
+    return window.matchMedia('(display-mode: standalone)').matches ||
+           window.navigator.standalone === true ||
+           document.referrer.includes('android-app://');
+  }
+  
+  if (isPWAInstalled()) {
+    isInstalled = true;
+    if (installContainer) installContainer.style.display = 'none';
+  }
+  
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    
+    if (!isInstalled && !installPromptShown && installContainer) {
+      installPromptShown = true;
+      installContainer.style.display = 'block';
+      if (installBtn) installBtn.classList.add('show');
+    }
+  });
+  
+  if (installBtn) {
+    installBtn.addEventListener('click', async () => {
+      if (!deferredPrompt) {
+        showManualInstallInstructions();
+        return;
+      }
+      
+      deferredPrompt.prompt();
+      const { outcome } = await deferredPrompt.userChoice;
+      
+      if (outcome === 'accepted') {
+        console.log('User accepted the install prompt');
+        isInstalled = true;
+        if (installContainer) installContainer.style.display = 'none';
+      } else {
+        console.log('User dismissed the install prompt');
+      }
+      
+      deferredPrompt = null;
+      if (installContainer) installContainer.style.display = 'none';
+    });
+  }
+  
+  function showManualInstallInstructions() {
+    const modal = document.createElement('div');
+    modal.id = 'pwa-manual-modal';
+    modal.innerHTML = `
+      <div class="pwa-manual-overlay">
+        <div class="pwa-manual-card">
+          <button class="pwa-manual-close">✕</button>
+          <div class="pwa-manual-icon">📱</div>
+          <h3>Install Neon Dream</h3>
+          <div class="pwa-manual-steps">
+            <div class="step">
+              <span class="step-num">1</span>
+              <span class="step-text">Tap the Share button <span class="step-icon">⎙</span></span>
+            </div>
+            <div class="step">
+              <span class="step-num">2</span>
+              <span class="step-text">Scroll down and tap <strong>"Add to Home Screen"</strong></span>
+            </div>
+            <div class="step">
+              <span class="step-num">3</span>
+              <span class="step-text">Tap <strong>"Add"</strong> to install</span>
+            </div>
+          </div>
+          <button class="pwa-manual-gotit">Got it</button>
+        </div>
+      </div>
+    `;
+    
+    document.body.appendChild(modal);
+    
+    const closeModal = () => modal.remove();
+    modal.querySelector('.pwa-manual-close').addEventListener('click', closeModal);
+    modal.querySelector('.pwa-manual-gotit').addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeModal();
+    });
+  }
+  
+  window.matchMedia('(display-mode: standalone)').addEventListener('change', (evt) => {
+    if (evt.matches) {
+      isInstalled = true;
+      if (installContainer) installContainer.style.display = 'none';
+    }
+  });
+  
+  setTimeout(() => {
+    if (!isInstalled && !installPromptShown && !deferredPrompt && installContainer) {
+      installContainer.style.display = 'block';
+      if (installBtn) installBtn.classList.add('show');
+    }
+  }, 5000);
+})();
+</script>
+
 </body>
 </html>
