@@ -1195,6 +1195,15 @@
      Docs: https://stripe.com/docs/js/including
 <script src="https://js.stripe.com/v3/"></script>
 -->
-
+<!-- Register Service Worker -->
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js')
+      .then(reg => console.log('Service Worker registered:', reg.scope))
+      .catch(err => console.error('Service Worker registration failed:', err));
+  });
+}
+</script>
 </body>
 </html>
