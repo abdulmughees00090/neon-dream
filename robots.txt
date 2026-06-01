@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Sitemap: https://neon-dream.silverfoxdynamics.com/sitemap.xml
+
+# Disable crawling of admin/private areas if any
+Disallow: /private/
+Disallow: /admin/
