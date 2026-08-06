@@ -1,7 +1,107 @@
+# Neon Dream — robots.txt
+# https://neon-dream.silverfoxdynamics.com/
+
+# ── Default: allow all well-behaved crawlers ──
 User-agent: *
 Allow: /
-Sitemap: https://neon-dream.silverfoxdynamics.com/sitemap.xml
-
-# Disable crawling of admin/private areas if any
 Disallow: /private/
 Disallow: /admin/
+Disallow: /offline.html
+
+# ── Major search engines (explicit, for clarity/priority) ──
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+User-agent: Baiduspider
+Allow: /
+
+User-agent: Yandex
+Allow: /
+
+# ── AI assistants / AI search crawlers ──
+# Allowed so Neon Dream can be discovered and cited by AI-powered
+# search and answer engines (ChatGPT Search, Perplexity, Claude, Copilot, Gemini).
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: cohere-ai
+Allow: /
+
+User-agent: Meta-ExternalAgent
+Allow: /
+
+# ── Social media / link-preview crawlers ──
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
+
+User-agent: LinkedInBot
+Allow: /
+
+User-agent: Discordbot
+Allow: /
+
+User-agent: TelegramBot
+Allow: /
+
+User-agent: WhatsApp
+Allow: /
+
+User-agent: Slackbot
+Allow: /
+
+User-agent: Slackbot-LinkExpanding
+Allow: /
+
+User-agent: redditbot
+Allow: /
+
+User-agent: Pinterestbot
+Allow: /
+
+# ── Sitemap ──
+Sitemap: https://neon-dream.silverfoxdynamics.com/sitemap.xml

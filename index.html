@@ -1,35 +1,228 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <link rel="icon" type="image/png" href="/favicon.png">
   <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
 
-  <!-- ═══ SEO META TAGS ═══ -->
-  <title>Neon Dream — Your Quiet Space for Thought & Calm</title>
-  <meta name="description" content="A meditative dark web experience for restless minds. When boredom strikes, when thoughts race, when anxiety creeps in — Neon Dream is your quiet, hypnotic companion in the dark."/>
-  <meta name="keywords" content="boredom helper, emotional support, anxiety reliever, stress relief, thought companion, mind wandering, calm space, meditation alternative, dark aesthetic, neon art, interactive experience, focus tool, anxiety relief, mental calm, boredom cure, ambient experience, emotional partner, mindful escape, stress controller, thought process aid, cyberpunk meditation, digital zen"/>
-  <meta name="author" content="Neon Dream"/>
-  <meta name="robots" content="index, follow"/>
-  <meta property="og:title" content="Neon Dream — A Living Space for Restless Minds"/>
-  <meta property="og:description" content="Move through darkness. Reveal hidden thoughts. A hypnotic companion for boredom, anxiety, and the 2am thought spiral."/>
+  <!-- ═══ FAVICONS ═══ -->
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="/favicon.png">
+  <link rel="apple-touch-icon" sizes="192x192" href="/assets/icons/icon-192x192.png">
+  <link rel="mask-icon" href="/favicon.png" color="#000000">
+  <link rel="shortcut icon" href="/favicon.ico">
+
+  <!-- ═══ PRIMARY SEO META TAGS ═══ -->
+  <title>Neon Dream — Interactive Neon Art Experience for Calm & Focus</title>
+  <meta name="description" content="A free interactive digital art experience — a hypnotic neon visualizer that reacts to your touch. Relax, kill boredom, and find your quiet space online."/>
+  <meta name="keywords" content="neon dream, interactive art, digital art experience, neon visuals, relaxing visualizer, hypnotic animation, boredom killer, ambient visuals, generative art, browser art, interactive website, online relaxation, visual meditation, creative coding, webgl art, canvas art, procedural animation, interactive experience, meditative visualizer, calming website, stress relief website, mind wandering, dark aesthetic art, cyberpunk meditation, digital zen, screensaver art, mesmerizing visuals, ambient web experience, focus tool, anxiety relief tool, thought companion"/>
+  <meta name="author" content="Silver Fox Dynamics"/>
+  <meta name="publisher" content="Silver Fox Dynamics"/>
+  <meta name="application-name" content="Neon Dream"/>
+  <meta name="generator" content="Neon Dream — Interactive Canvas Art Engine"/>
+  <meta name="rating" content="general"/>
+  <meta name="referrer" content="strict-origin-when-cross-origin"/>
+  <meta name="format-detection" content="telephone=no"/>
+
+  <!-- Robots / Crawl directives -->
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"/>
+  <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"/>
+  <meta name="bingbot" content="index, follow"/>
+
+  <!-- Canonical + language alternates -->
+  <link rel="canonical" href="https://neon-dream.silverfoxdynamics.com/"/>
+  <link rel="alternate" hreflang="en" href="https://neon-dream.silverfoxdynamics.com/"/>
+  <link rel="alternate" hreflang="x-default" href="https://neon-dream.silverfoxdynamics.com/"/>
+
+  <!-- ═══ OPEN GRAPH (Facebook, LinkedIn, Discord, Slack, WhatsApp, Telegram, Pinterest) ═══ -->
+  <meta property="og:site_name" content="Neon Dream"/>
+  <meta property="og:title" content="Neon Dream — Interactive Neon Art Experience for Calm & Focus"/>
+  <meta property="og:description" content="A free, hypnotic, generative neon visualizer that reacts to your touch. Move slowly through the dark and watch the dream reveal itself — your quiet space for thought and calm."/>
   <meta property="og:type" content="website"/>
-  <meta property="og:image" content="og-image.png"/>
+  <meta property="og:url" content="https://neon-dream.silverfoxdynamics.com/"/>
+  <meta property="og:image" content="https://neon-dream.silverfoxdynamics.com/assets/og/og-image.png"/>
+  <meta property="og:image:secure_url" content="https://neon-dream.silverfoxdynamics.com/assets/og/og-image.png"/>
+  <meta property="og:image:type" content="image/png"/>
+  <meta property="og:image:width" content="1200"/>
+  <meta property="og:image:height" content="630"/>
+  <meta property="og:image:alt" content="Neon Dream — glowing concentric rings of neon light on a black background, the signature visual of the interactive art experience."/>
+  <meta property="og:locale" content="en_US"/>
+
+  <!-- Pinterest Rich Pins -->
+  <meta name="pinterest-rich-pin" content="true"/>
+  <meta property="article:author" content="Silver Fox Dynamics"/>
+
+  <!-- ═══ X (TWITTER) CARDS ═══ -->
   <meta name="twitter:card" content="summary_large_image"/>
-  <meta name="twitter:title" content="Neon Dream — Emotional Companion in the Dark"/>
-  <meta name="twitter:description" content="When your mind won't stop. When the night is too quiet. Move slowly — the dream reacts."/>
+  <meta name="twitter:title" content="Neon Dream — Interactive Neon Art Experience"/>
+  <meta name="twitter:description" content="A hypnotic generative visualizer that reacts to your touch. Move slowly — the dream reacts. Free to explore in your browser."/>
+  <meta name="twitter:image" content="https://neon-dream.silverfoxdynamics.com/assets/og/og-image.png"/>
+  <meta name="twitter:image:alt" content="Neon Dream — glowing concentric rings of neon light on a black background."/>
+
+  <!-- ═══ THEME / MOBILE / PWA META ═══ -->
   <meta name="theme-color" content="#000000"/>
-  <link rel="canonical" href="https://silverfoxdynamics.com/"/>
-  
-  <!-- PWA Meta Tags -->
+  <meta name="color-scheme" content="dark"/>
   <link rel="manifest" href="/manifest.json">
+  <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Neon Dream">
-  <link rel="apple-touch-icon" href="/assets/icons/icon-192x192.png">
-  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-touch-fullscreen" content="yes">
+
+  <!-- Microsoft / Windows tiles -->
+  <meta name="msapplication-config" content="/browserconfig.xml">
   <meta name="msapplication-TileImage" content="/assets/icons/icon-144x144.png">
   <meta name="msapplication-TileColor" content="#000000">
+  <meta name="msapplication-navbutton-color" content="#000000">
+  <meta name="msapplication-starturl" content="/">
+
+  <!-- ═══ RESOURCE HINTS (Core Web Vitals / performance) ═══ -->
+  <link rel="preload" href="/favicon.png" as="image" type="image/png">
+  <link rel="dns-prefetch" href="https://neon-dream.silverfoxdynamics.com">
+
+  <!-- ═══ STRUCTURED DATA (JSON-LD) ═══ -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://neon-dream.silverfoxdynamics.com/#website",
+        "url": "https://neon-dream.silverfoxdynamics.com/",
+        "name": "Neon Dream",
+        "description": "A free interactive digital art experience — a hypnotic, generative neon visualizer that reacts to your touch.",
+        "inLanguage": "en",
+        "publisher": { "@id": "https://silverfoxdynamics.com/#organization" }
+      },
+      {
+        "@type": "Organization",
+        "@id": "https://silverfoxdynamics.com/#organization",
+        "name": "Silver Fox Dynamics",
+        "url": "https://silverfoxdynamics.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://neon-dream.silverfoxdynamics.com/assets/icons/icon-512x512.png",
+          "width": 512,
+          "height": 512
+        },
+        "email": "info@silverfoxdynamics.com",
+        "sameAs": []
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://neon-dream.silverfoxdynamics.com/#webpage",
+        "url": "https://neon-dream.silverfoxdynamics.com/",
+        "name": "Neon Dream — Interactive Neon Art Experience for Calm & Focus",
+        "description": "Neon Dream is a free interactive digital art experience — a hypnotic, generative neon visualizer that reacts to your touch. Relax, unwind, and kill boredom in a quiet space for thought.",
+        "isPartOf": { "@id": "https://neon-dream.silverfoxdynamics.com/#website" },
+        "primaryImageOfPage": { "@id": "https://neon-dream.silverfoxdynamics.com/#primaryimage" },
+        "inLanguage": "en",
+        "datePublished": "2026-06-02",
+        "dateModified": "2026-08-06",
+        "breadcrumb": { "@id": "https://neon-dream.silverfoxdynamics.com/#breadcrumb" }
+      },
+      {
+        "@type": "ImageObject",
+        "@id": "https://neon-dream.silverfoxdynamics.com/#primaryimage",
+        "url": "https://neon-dream.silverfoxdynamics.com/assets/og/og-image.png",
+        "contentUrl": "https://neon-dream.silverfoxdynamics.com/assets/og/og-image.png",
+        "width": 1200,
+        "height": 630,
+        "caption": "Neon Dream — glowing concentric rings of neon light on a black background."
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://neon-dream.silverfoxdynamics.com/#breadcrumb",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Neon Dream",
+            "item": "https://neon-dream.silverfoxdynamics.com/"
+          }
+        ]
+      },
+      {
+        "@type": "CreativeWork",
+        "name": "Neon Dream",
+        "creator": { "@id": "https://silverfoxdynamics.com/#organization" },
+        "url": "https://neon-dream.silverfoxdynamics.com/",
+        "description": "An interactive generative-art piece built with HTML5 Canvas. Concentric rings of neon light respond to cursor and touch movement, creating a hypnotic, ever-changing visual field designed for relaxation, focus, and quiet reflection.",
+        "genre": ["Generative Art", "Interactive Media Art", "Digital Art"],
+        "artform": "Interactive digital art",
+        "artMedium": "HTML5 Canvas, JavaScript",
+        "isAccessibleForFree": true,
+        "audience": {
+          "@type": "Audience",
+          "audienceType": "Anyone seeking relaxation, focus, or a calming visual experience"
+        }
+      },
+      {
+        "@type": "WebApplication",
+        "name": "Neon Dream",
+        "url": "https://neon-dream.silverfoxdynamics.com/",
+        "applicationCategory": "LifestyleApplication",
+        "operatingSystem": "Any (runs in a web browser)",
+        "browserRequirements": "Requires JavaScript. Requires HTML5.",
+        "isAccessibleForFree": true,
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        },
+        "description": "A free browser-based interactive neon art visualizer for relaxation and focus. Optional voluntary donations keep the project running."
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://neon-dream.silverfoxdynamics.com/#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is Neon Dream?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Neon Dream is a free interactive digital art experience. It is a generative neon visualizer that responds to your mouse or touch movement, creating a slow, hypnotic field of light designed to help you relax, unwind, and quiet a racing mind."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How do I use Neon Dream?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Open the site in any modern browser and move your cursor or finger slowly across the screen. The visuals react to your movement — nothing is hidden, you simply haven't revealed it yet."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is Neon Dream free to use?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. Neon Dream is completely free to explore. It is supported entirely through small, voluntary donations from visitors who want to help keep it online."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Do I need to install anything to use Neon Dream?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No installation is required — Neon Dream runs directly in your web browser. It can also be added to your home screen as a Progressive Web App for an app-like experience."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What technology powers Neon Dream?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Neon Dream is built with HTML5 Canvas and JavaScript, rendering a real-time generative animation entirely in the browser without external plugins."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
 
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -589,43 +782,137 @@
       background: rgba(0, 255, 238, 0.15);
       border-color: #0ff;
     }
+    /* Visually-hidden but screen-reader/crawler accessible content. */
+    .sr-only {
+      position: absolute;
+      width: 1px; height: 1px;
+      padding: 0; margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
   </style>
 </head>
 <body>
 
-<canvas id="c"></canvas>
+<!-- ═══ Accessible / crawlable content ═══
+     Neon Dream is a full-screen HTML5 Canvas artwork with no visible
+     text in the experience itself. This block provides the same
+     semantic content to screen readers, search engines, and AI
+     crawlers that a sighted mouse user discovers interactively.
+     It is not display:none — it remains in the accessibility tree. -->
+<header class="sr-only">
+  <h1>Neon Dream — Interactive Neon Art Experience for Calm &amp; Focus</h1>
+  <p>
+    Neon Dream is a free, interactive digital art experience: a hypnotic,
+    generative neon visualizer rendered live in HTML5 Canvas. Move your
+    mouse or finger slowly across the screen and concentric rings of neon
+    light bloom, drift, and respond to your movement. It's a relaxing
+    visualizer, a boredom killer, an ambient screensaver-style visual
+    meditation, and a quiet browser-based space for wandering thoughts —
+    no download, sign-up, or installation required.
+  </p>
+</header>
+
+<main class="sr-only">
+  <section aria-labelledby="about-heading">
+    <h2 id="about-heading">About this interactive art piece</h2>
+    <p>
+      Built with procedural, generative-art techniques, Neon Dream reacts
+      in real time to cursor and touch input, producing an ever-changing
+      field of hypnotic light. Nothing on screen is fixed — nothing is
+      hidden, you simply haven't revealed it yet. Move slowly and the
+      dream reacts. It works as a calming visualizer for focus and
+      relaxation, a creative-coding showcase of browser art, and a quiet
+      digital space to sit with your thoughts.
+    </p>
+  </section>
+
+  <section aria-labelledby="faq-heading">
+    <h2 id="faq-heading">Frequently asked questions</h2>
+    <article>
+      <h3>What is Neon Dream?</h3>
+      <p>Neon Dream is a free interactive digital art experience — a generative neon visualizer that responds to your mouse or touch movement, creating a slow, hypnotic field of light designed to help you relax, unwind, and quiet a racing mind.</p>
+    </article>
+    <article>
+      <h3>How do I use Neon Dream?</h3>
+      <p>Open the site in any modern browser and move your cursor or finger slowly across the screen. The visuals react to your movement — nothing is hidden, you simply haven't revealed it yet.</p>
+    </article>
+    <article>
+      <h3>Is Neon Dream free to use?</h3>
+      <p>Yes. Neon Dream is completely free to explore. It is supported entirely through small, voluntary donations from visitors who want to help keep it online.</p>
+    </article>
+    <article>
+      <h3>Do I need to install anything?</h3>
+      <p>No installation is required — Neon Dream runs directly in your web browser. It can also be added to your home screen as a Progressive Web App for an app-like experience.</p>
+    </article>
+    <article>
+      <h3>What technology powers Neon Dream?</h3>
+      <p>Neon Dream is built with HTML5 Canvas and JavaScript, rendering a real-time generative animation entirely in the browser without external plugins.</p>
+    </article>
+  </section>
+
+  <nav class="sr-only" aria-label="Site links">
+    <a href="/">Home</a>
+    <a href="/pricing.html">Support Neon Dream / Pricing</a>
+    <a href="/terms.html">Terms of Service</a>
+    <a href="/privacy.html">Privacy Policy</a>
+    <a href="/refund.html">Refund Policy</a>
+  </nav>
+</main>
+
+<noscript>
+  <div style="background:#000;color:#eee;font-family:Georgia,serif;padding:48px;text-align:center;min-height:100vh;">
+    <h1>Neon Dream — Interactive Neon Art Experience for Calm &amp; Focus</h1>
+    <p style="max-width:560px;margin:16px auto;line-height:1.6;">
+      Neon Dream is a free, interactive HTML5 Canvas art experience — a
+      hypnotic neon visualizer that reacts to your movement. It requires
+      JavaScript to run. Please enable JavaScript in your browser to
+      experience Neon Dream.
+    </p>
+    <nav style="margin-top:24px;">
+      <a href="/pricing.html" style="color:#0cf;margin:0 10px;">Pricing</a>
+      <a href="/terms.html" style="color:#0cf;margin:0 10px;">Terms</a>
+      <a href="/privacy.html" style="color:#0cf;margin:0 10px;">Privacy</a>
+      <a href="/refund.html" style="color:#0cf;margin:0 10px;">Refunds</a>
+    </nav>
+  </div>
+</noscript>
+
+<canvas id="c" role="img" aria-label="Generative neon light animation that responds to cursor and touch movement"></canvas>
 <div id="cursor-dot"></div>
-<div id="session-glyph">◈</div>
-<button id="mute-btn">♪ MUTE</button>
-<div id="footer-links">
-  <a href="pricing.html">PRICING</a>
-  <a href="terms.html">TERMS</a>
-  <a href="privacy.html">PRIVACY</a>
-  <a href="refund.html">REFUNDS</a>
-</div>
+<div id="session-glyph" aria-hidden="true">◈</div>
+<button id="mute-btn" type="button" aria-label="Toggle ambient sound">♪ MUTE</button>
+<nav id="footer-links" aria-label="Footer">
+  <a href="/pricing.html" title="Support Neon Dream — pricing and donations">PRICING</a>
+  <a href="/terms.html" title="Neon Dream Terms of Service">TERMS</a>
+  <a href="/privacy.html" title="Neon Dream Privacy Policy">PRIVACY</a>
+  <a href="/refund.html" title="Neon Dream Refund Policy">REFUNDS</a>
+</nav>
 
 <!-- Tutorial -->
-<div id="tutorial">
+<div id="tutorial" role="dialog" aria-modal="true" aria-labelledby="tut-line1">
   <div class="tut-inner">
-    <span class="tut-glyph">· · ·</span>
-    <div class="tut-line1">Nothing is hidden.<br>You simply haven't<br>revealed it yet.</div>
+    <span class="tut-glyph" aria-hidden="true">· · ·</span>
+    <div class="tut-line1" id="tut-line1">Nothing is hidden.<br>You simply haven't<br>revealed it yet.</div>
     <div class="tut-line2">move slowly — the dream reacts</div>
-    <button class="tut-btn" id="tut-enter">enter</button>
+    <button class="tut-btn" id="tut-enter" type="button">enter</button>
   </div>
 </div>
 
-<!-- Payment overlay -->
-<div id="pay-overlay">
+<!-- Payment / donation overlay -->
+<div id="pay-overlay" role="dialog" aria-modal="true" aria-labelledby="pay-modal-title" aria-describedby="pay-modal-sub">
   <div class="pay-modal">
     <div class="pay-title" id="pay-modal-title">Keep It Alive</div>
     <div class="pay-sub" id="pay-modal-sub">Something kept you here.<br>Leave a trace of light.</div>
-    <div class="pay-amounts">
-      <button class="pay-amount-btn active" data-amount="1">$1</button>
-      <button class="pay-amount-btn" data-amount="3">$3</button>
-      <button class="pay-amount-btn" data-amount="5">$5</button>
+    <div class="pay-amounts" role="group" aria-label="Donation amount">
+      <button class="pay-amount-btn active" data-amount="1" type="button" aria-pressed="true">$1</button>
+      <button class="pay-amount-btn" data-amount="3" type="button" aria-pressed="false">$3</button>
+      <button class="pay-amount-btn" data-amount="5" type="button" aria-pressed="false">$5</button>
     </div>
-    <button class="pay-confirm-btn" id="pay-confirm">Continue the Signal →</button>
-    <button class="pay-close" id="pay-close">dissolve back</button>
+    <button class="pay-confirm-btn" id="pay-confirm" type="button">Continue the Signal →</button>
+    <button class="pay-close" id="pay-close" type="button" aria-label="Close donation dialog">dissolve back</button>
   </div>
 </div>
 
@@ -1049,8 +1336,9 @@
 
   amountBtns.forEach(btn => {
     btn.addEventListener('click', () => {
-      amountBtns.forEach(b => b.classList.remove('active'));
+      amountBtns.forEach(b => { b.classList.remove('active'); b.setAttribute('aria-pressed', 'false'); });
       btn.classList.add('active');
+      btn.setAttribute('aria-pressed', 'true');
       selectedAmount = parseInt(btn.dataset.amount);
     });
   });
@@ -1219,8 +1507,8 @@ if ('serviceWorker' in navigator) {
 
 <!-- PWA Install Button HTML -->
 <div id="pwa-install-container" style="display: none;">
-  <button id="pwa-install-btn" class="pwa-install-btn">
-    <span class="pwa-plus-icon">+</span>
+  <button id="pwa-install-btn" class="pwa-install-btn" type="button" aria-label="Install Neon Dream as an app">
+    <span class="pwa-plus-icon" aria-hidden="true">+</span>
     <span class="pwa-text">Install App</span>
   </button>
 </div>

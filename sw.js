@@ -1,5 +1,5 @@
-// Neon Dream Service Worker v1.0.0
-const CACHE_NAME = 'neon-dream-v1';
+// Neon Dream Service Worker v1.1.0
+const CACHE_NAME = 'neon-dream-v2';
 const OFFLINE_URL = '/offline.html';
 
 // Files to cache on install
@@ -7,7 +7,9 @@ const PRECACHE_URLS = [
   '/',
   '/offline.html',
   '/manifest.json',
-  '/index.html'
+  '/index.html',
+  '/favicon.ico',
+  '/favicon.png'
 ];
 
 // Assets with versioning - cache on fetch
